@@ -1,0 +1,1 @@
+# An-lise-de-sentimentos-de-avalia-es-de-produtos
