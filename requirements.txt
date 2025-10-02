@@ -1,0 +1,8 @@
+pandas
+matplotlib
+plotly
+textblob
+transformers
+jupyter
+kaleido
+torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
