@@ -1,109 +1,85 @@
-# Análise de Sentimentos — Olist
+# Análise de Sentimentos de Avaliações de Produtos (Olist)
 
-Este repositório contém um notebook Jupyter (`analise_sentimentos.ipynb`) que realiza uma análise exploratória e de sentimentos em avaliações de clientes usando os datasets públicos da **Olist**. O objetivo principal é comparar usando uma amostra o sentimento extraído dos comentários (via modelo BERT) com as notas numéricas (`review_score`) e analisar padrões por categoria de produto.
+Este projeto realiza uma análise de sentimentos sobre avaliações de produtos encontrados em um banco de datasets públicos da Olist. O objetivo é classificar os comentários dos clientes como positivos, negativos ou neutros e, a partir disso, identificar as categorias de produtos com os maiores e menores índices de satisfação.
 
----
+O núcleo da análise é o uso de um modelo de linguagem pré-treinado (BERT) para interpretar o sentimento expresso nos textos das avaliações, comparando-o em seguida com a nota originalmente atribuída pelo cliente.
 
-## Sumário
+## 📂 Estrutura do Repositório
+Markdown
 
-* **Descrição:** que faz o notebook
-* **Arquivos esperados:** quais CSVs são usados
-* **Dependências:** bibliotecas necessárias
-* **Como executar:** passos para reproduzir
-* **Descrição das etapas do notebook:** resumo das células e análises realizadas
-* **Resultados principais & próximos passos**
+# Análise de Sentimentos de Avaliações de Produtos (Olist)
 
----
+Este projeto realiza uma análise de sentimentos sobre as avaliações de produtos de um grande marketplace brasileiro, utilizando o dataset público da Olist. O objetivo é classificar os comentários dos clientes como positivos, negativos ou neutros e, a partir disso, identificar as categorias de produtos com os maiores e menores índices de satisfação.
 
-## Arquivos principais
+O núcleo da análise é o uso de um modelo de linguagem pré-treinado (BERT) para interpretar o sentimento expresso nos textos das avaliações, comparando-o em seguida com a nota originalmente atribuída pelo cliente.
 
-* `analisefinal.ipynb` — Notebook com todo o fluxo de análise.
+## 📂 Estrutura do Repositório
 
-**Datasets esperados (coloque na pasta `data/` ou adapte caminhos no notebook):**
+/
+├── archive/
+│   ├── olist_order_items_dataset.csv
+│   ├── olist_order_reviews_dataset.csv
+│   ├── olist_orders_dataset.csv
+│   ├── olist_products_dataset.csv
+│   └── product_category_name_translation.csv
+├── analise_sentimentos.ipynb
+├── requirements.txt
+└── README.md
 
-```
-olist_order_items_dataset.csv
-olist_order_reviews_dataset.csv
-olist_orders_dataset.csv
-olist_products_dataset.csv
-product_category_name_translation.csv
+-   **`archive/`**: Contém todos os arquivos `.csv` do dataset da Olist necessários para a análise.
+-   **`analise_sentimentos.ipynb`**: O Jupyter Notebook com todo o código da análise, desde o pré-processamento até a visualização dos resultados.
+-   **`requirements.txt`**: Arquivo com as bibliotecas Python necessárias para executar o projeto.
 
-```
+## 🛠️ Tecnologias Utilizadas
 
----
+-   **Python 3**
+-   **Pandas**: Para manipulação e análise dos dados.
+-   **Transformers (Hugging Face)**: Para utilizar o modelo BERT pré-treinado em análise de sentimentos.
+-   **Plotly**: Para a criação de gráficos interativos e visualizações de dados.
+-   **TextBlob**: Biblioteca para processamento de texto.
+-   **Jupyter Notebook**: Como ambiente de desenvolvimento para a análise.
 
-## Dependências
+## 🚀 Como Executar o Projeto
 
-Recomendado criar um ambiente virtual e instalar dependências com:
+1.  **Clone o repositório:**
+    ```bash
+    git clone <url-do-seu-repositorio>
+    cd <nome-do-repositorio>
+    ```
 
-```bash
-pip install -r requirements.txt
-```
+2.  **Crie um ambiente virtual (recomendado):**
+    ```bash
+    python -m venv venv
+    source venv/bin/activate  # No Windows: venv\Scripts\activate
+    ```
 
-Exemplo mínimo de `requirements.txt`:
+3.  **Instale as dependências:**
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-```
-pandas
-matplotlib
-plotly
-textblob
-transformers
-jupyter
-kaleido
-torch
+4.  **Verifique os dados**: Certifique-se de que os arquivos CSV do dataset da Olist estão dentro da pasta `archive/`.
 
-```
+5.  **Execute o Jupyter Notebook:**
+    ```bash
+    jupyter notebook analise_sentimentos.ipynb
+    ```
 
-> Observação: o notebook usa um modelo BERT via `transformers` — é necessário acesso à internet para baixar o modelo (`nlptown/bert-base-multilingual-uncased-sentiment`) na primeira execução. GPU é opcional, porém acelera o processamento de inferência.
+## 📝 Metodologia
 
----
+A análise foi conduzida seguindo as etapas abaixo:
 
-## Como executar (passo a passo)
+1.  **Carregamento e Mesclagem de Dados**: Os múltiplos arquivos CSV da Olist foram carregados e mesclados para criar um DataFrame unificado, contendo informações de pedidos, produtos e avaliações.
 
-```bash
-# clonar o repositório
-git clone https://github.com/seu-usuario/seu-repo.git
-cd seu-repo
+2.  **Análise de Sentimentos com BERT**:
+    -   Foi utilizado o modelo pré-treinado `nlptown/bert-base-multilingual-uncased-sentiment` da Hugging Face, capaz de classificar textos em uma escala de 1 a 5 estrelas.
+    -   Uma função foi criada para aplicar o modelo aos comentários das avaliações, extraindo uma "nota do comentário" (de 1 a 5).
+    -   Essa nota foi então convertida em um sentimento categórico: **Positivo** (4 ou 5), **Neutro** (3) ou **Negativo** (1 ou 2).
 
-# criar e ativar ambiente virtual (opcional)
-python -m venv venv
-# Linux / macOS
-source venv/bin/activate
-# Windows
-venv\Scripts\activate
+3.  **Amostragem e Classificação**: Para otimizar o processamento, foi selecionada uma amostra aleatória de 1000 avaliações que continham comentários. Para cada avaliação na amostra, foram criadas duas colunas de sentimento:
+    -   `sentimento_comentario`: Baseado na previsão do modelo BERT sobre o texto.
+    -   `sentimento_nota`: Baseado na nota (de 1 a 5) que o cliente originalmente deu.
 
-# instalar dependências
-pip install -r requirements.txt
+4.  **Avaliação de Acurácia**: A análise inicial comparou o `sentimento_comentario` com o `sentimento_nota`, atingindo uma acurácia de **73.20%**.
 
-# abrir o notebook
-jupyter notebook analise_sentimentos.ipynb
-```
-
----
-
-## Descrição das etapas no notebook
-
-1. **Carregamento das bibliotecas e dos datasets** — import das bibliotecas e leitura dos CSVs da Olist.
-2. **Pré-processamento / Merge** — união das tabelas (`order_items`, `orders`, `order_reviews`, `products`) por `order_id` e `product_id` para compor o dataset final de análise.
-3. **Amostragem** — seleção de uma amostra de avaliações com texto (por exemplo, 1000 comentários) para acelerar a inferência inicial e permitir visualizações rápidas.
-4. **Análise de Sentimento com BERT** — aplicação do modelo `nlptown/bert-base-multilingual-uncased-sentiment` para classificar cada comentário como *Positivo*, *Neutro* ou *Negativo*.
-5. **Comparação sentimento vs. nota** — criação de uma métrica de compatibilidade entre o sentimento detectado e a nota `review_score` (1–5) e cálculo de acurácia da correspondência.
-6. **Análises por categoria de produto** — cálculo de proporções de avaliações baixas (1–2), neutras e altas (4–5) por categoria; filtra categorias com número mínimo de avaliações para evitar vieses.
-7. **Visualizações interativas (Plotly)** — histogramas, rankings por categoria e gráficos que facilitam a interpretação dos padrões de satisfação.
-
----
-
-## Resultados principais (resumo)
-
-* **Taxa de concordância** entre sentimento textual e nota numérica: o notebook calcula uma acurácia percentual indicando o quanto comentário e nota estão alinhados.
-* **Categorias com melhor/worse percepção**: ranking de categorias por proporção de avaliações positivas/negativas.
-* **Visualizações interativas** que permitem inspecionar distribuições e comparar sentimento por nota e por categoria.
-
-> Nota: valores numéricos concretos (ex.: acurácia em %) e gráficos gerados estão disponíveis dentro do próprio notebook — revise as células de saída para ver os números obtidos na sua execução local.
-
----
-
-## Observações e cuidados
-
-* O modelo BERT usado é multilíngue e funciona razoavelmente bem em português, porém existem modelos especificamente treinados para português (ex.: BERTimbau) que podem melhorar a acurácia.
-* Avaliações curtas ou com ironia/sarcasmo podem gerar classificações equivocadas — considere rotular uma amostra manualmente para avaliar a performance real.
+5.  **Análise Combinada (Aprimoramento)**: Para obter uma visão mais robusta, foi criada uma segunda métrica de análise (`analise_combinada2`) que calcula a média entre a nota do cliente (`review_score`) e a nota prevista pelo BERT (`comment_score`). Essa abordagem elevou a acurácia de compatibilidade para **81.80%**, mostrando-se mais alinhada com a avaliação original do cliente.
