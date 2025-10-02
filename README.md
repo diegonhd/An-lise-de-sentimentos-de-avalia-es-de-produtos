@@ -48,6 +48,9 @@ plotly
 textblob
 transformers
 jupyter
+kaleido
+torch
+
 ```
 
 > Observação: o notebook usa um modelo BERT via `transformers` — é necessário acesso à internet para baixar o modelo (`nlptown/bert-base-multilingual-uncased-sentiment`) na primeira execução. GPU é opcional, porém acelera o processamento de inferência.
@@ -72,7 +75,7 @@ venv\Scripts\activate
 pip install -r requirements.txt
 
 # abrir o notebook
-jupyter notebook analisefinal.ipynb
+jupyter notebook analise_sentimentos.ipynb
 ```
 
 ---
