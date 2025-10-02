@@ -1,6 +1,6 @@
 # Análise de Sentimentos — Olist
 
-Este repositório contém um notebook Jupyter (`analisefinal.ipynb`) que realiza uma análise exploratória e de sentimentos em avaliações de clientes usando os datasets públicos da **Olist**. O objetivo principal é comparar usando uma amostra o sentimento extraído dos comentários (via modelo BERT) com as notas numéricas (`review_score`) e analisar padrões por categoria de produto.
+Este repositório contém um notebook Jupyter (`analise_sentimentos.ipynb`) que realiza uma análise exploratória e de sentimentos em avaliações de clientes usando os datasets públicos da **Olist**. O objetivo principal é comparar usando uma amostra o sentimento extraído dos comentários (via modelo BERT) com as notas numéricas (`review_score`) e analisar padrões por categoria de produto.
 
 ---
 
