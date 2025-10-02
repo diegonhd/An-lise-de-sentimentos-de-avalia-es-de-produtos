@@ -14,7 +14,7 @@ Este projeto realiza uma análise de sentimentos sobre as avaliações de produt
 O núcleo da análise é o uso de um modelo de linguagem pré-treinado (BERT) para interpretar o sentimento expresso nos textos das avaliações, comparando-o em seguida com a nota originalmente atribuída pelo cliente.
 
 ## 📂 Estrutura do Repositório
-
+```bash
 /
 ├── archive/
 │   ├── olist_order_items_dataset.csv
@@ -25,7 +25,7 @@ O núcleo da análise é o uso de um modelo de linguagem pré-treinado (BERT) pa
 ├── analise_sentimentos.ipynb
 ├── requirements.txt
 └── README.md
-
+```
 -   **`archive/`**: Contém todos os arquivos `.csv` do dataset da Olist necessários para a análise.
 -   **`analise_sentimentos.ipynb`**: O Jupyter Notebook com todo o código da análise, desde o pré-processamento até a visualização dos resultados.
 -   **`requirements.txt`**: Arquivo com as bibliotecas Python necessárias para executar o projeto.
